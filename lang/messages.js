@@ -39,7 +39,7 @@ const MESSAGES = {
     '1302': 'product get successfully!',
     '1303': 'You are not admin!',
     '1304': 'product delete successfully',
-    '1305': 'product uploded successfully',
+    '1305': 'product update successfully',
     '1306': 'Please select video file..',
     '1307': 'Video not found',
     '1308': 'Video update successfully',

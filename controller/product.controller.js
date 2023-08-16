@@ -1,5 +1,6 @@
 const Validator = require('validatorjs');
 const db = require('../config/db.config');
+const path = require('path')
 
 
 //...............models..........
@@ -54,8 +55,123 @@ const addProduct = async (req, res) => {
 }
 
 
+//................get all product by admin...................
+const getAllProducts = async (req, res) => {
+    try {
+        const authAdmin = req.user;
+        if (!authAdmin) {
+            return RESPONSE.error(res, 1105)
+        }
 
+        const allProducts = await Product.findAll();
+
+        return RESPONSE.success(res, 1202, allProducts)
+    } catch (error) {
+        console.log(error);
+        return RESPONSE.error(res, 9999)
+    }
+}
+
+
+//....................get all product  by user.............
+const getAllProductsByUser = async (req, res) => {
+    try {
+        const authUser = req.user;
+        if (!authUser) {
+            return RESPONSE.error(res, 1018)
+        }
+
+        const allProducts = await Product.findAll();
+
+        return RESPONSE.success(res, 1202, allProducts)
+    } catch (error) {
+        console.log(error);
+        return RESPONSE.error(res, 9999)
+    }
+}
+
+//................update product...........................
+
+const updateProduct = async (req, res) => {
+    let validation = new Validator(req.body, {
+        title: 'string|max:50',
+        description: 'string|max:200',
+        price: 'numeric|min:0',
+        quantity: 'numeric|min:0',
+    });
+    if (validation.fails()) {
+        firstMessage = Object.keys(validation.errors.all())[0];
+        return RESPONSE.error(res, validation.errors.first(firstMessage));
+    }
+
+    let trans = await db.sequelize.transaction();
+
+    try {
+        const { title, description, price, quantity, product_categories_id } = req.body;
+        const product_image = req?.files;
+        const authAdmin = req.user;
+        const product_id = req.query.product_id;
+
+        if (!authAdmin) {
+            await trans.rollback();
+            return RESPONSE.error(res, 1105);
+        }
+
+        const object = {
+            title,
+            description,
+            price,
+            quantity,
+        }
+
+        const findProduct = await Product.findOne({
+            where: { id: product_id },
+            include: [
+                {
+                    model: product_images,
+                    attributes: ['product_image', 'id']
+                }
+            ]
+        });
+
+        if (!findProduct) {
+            await trans.rollback();
+            return RESPONSE.error(res, 1204);
+        }
+
+        if (findProduct.product_images) {
+
+            for (const image of findProduct.product_images) {
+                await product_images.destroy({ where: { id: image.id }, transaction: trans })
+                await FILEACTION.deleteFile(path.basename(image.product_image), 'images/productImages');
+            }
+
+            for (const image of product_image) {
+                await product_images.create(
+                    {
+                        product_image: image.filename,
+                        product_id: product_id
+                    },
+                    { where: { id: image.id }, transaction: trans }
+                );
+            }
+        }
+
+        const updatedData = await Product.update(object, { where: { id: product_id }, transaction: trans });
+
+        await trans.commit();
+
+        return RESPONSE.success(res, 1305, updatedData);
+    } catch (error) {
+        await trans.rollback();
+        console.log(error);
+        return RESPONSE.error(res, 9999);
+    }
+};
 
 module.exports = {
     addProduct,
+    getAllProducts,
+    getAllProductsByUser,
+    updateProduct
 }

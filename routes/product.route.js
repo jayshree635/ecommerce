@@ -22,12 +22,18 @@ route.post('/add-product-categories',auth.authAdmin,product_categoriesController
 
 route.get('/all-product-categories',auth.authAdmin,product_categoriesController.getAllProduct_categories);
 
-route.get('/all-categories-ByUser',auth.authUser,product_categoriesController.getAllProduct_categories);
+route.get('/all-categories-user',auth.authUser,product_categoriesController.getAllProduct_categories);
 
 route.patch('/update-product-categories',auth.authAdmin,product_categoriesController.updateProductCategories)
 
-//...................product...............
-route.post('/add-product',auth.authAdmin,uploadImage.uploadMultipleImage('productImages','product_image'),productController.addProduct)
 
+//...................product...............
+route.post('/add-product',auth.authAdmin,uploadImage.uploadMultipleImage('productImages','product_image'),productController.addProduct);
+
+route.get('/get-all-product',auth.authAdmin,productController.getAllProducts)
+
+route.get('/get-all-product-user',auth.authUser,productController.getAllProductsByUser)
+
+route.patch('/update-product',auth.authAdmin,uploadImage.uploadMultipleImage('productImages','product_image'),productController.updateProduct)
 
 module.exports = route
