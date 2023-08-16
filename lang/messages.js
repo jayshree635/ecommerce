@@ -17,6 +17,7 @@ const MESSAGES = {
     '1015': 'otp time expire Send mail again',
     '1016': 'email not exist',
     '1017': 'check your mail',
+    '1018': 'check your mail',
 
     // Admin controller
     '1101': 'Get Admin profile successfully.',
@@ -25,10 +26,13 @@ const MESSAGES = {
     '1104': 'update admin profile successfully',
     '1105': 'You are not admin',
 
-    // categories controller
-    '1201': 'Categories create successfully!',
-    '1202': 'Categories data get successfully!',
-    '1203': 'Categories delete successfully!',
+    // product categories controller
+    '1201': 'product Categories create successfully!',
+    '1202': 'product Categories  get successfully!',
+    '1203': 'product Categories delete successfully!',
+    '1204': 'product Categories not found!',
+    '1205': 'product Categories update successfully!',
+
 
     // product controller
     '1301': 'product create successfully!',

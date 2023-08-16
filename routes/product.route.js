@@ -17,10 +17,16 @@ const product_categoriesController = require('../controller/product_categories.c
 
 //.......................................... routes  ...........................................
 
-
 //...................product_categories.......
 route.post('/add-product-categories',auth.authAdmin,product_categoriesController.addProductCategory);
 
+route.get('/all-product-categories',auth.authAdmin,product_categoriesController.getAllProduct_categories);
+
+route.get('/all-categories-ByUser',auth.authUser,product_categoriesController.getAllProduct_categories);
+
+route.patch('/update-product-categories',auth.authAdmin,product_categoriesController.updateProductCategories)
+
+//...................product...............
 route.post('/add-product',auth.authAdmin,uploadImage.uploadMultipleImage('productImages','product_image'),productController.addProduct)
 
 

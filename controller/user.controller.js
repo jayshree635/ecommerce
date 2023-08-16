@@ -12,7 +12,7 @@ const mailUtils = require('../utils/sendMail')
 
 //...........phone_no validation
 Validator.register('phone_length', (value) => {
-    return value.length >=10 && value.length <= 12;
+    return value.length >= 10 && value.length <= 12;
 }, 'The phone_no must be between 10 and 12 characters.');
 
 
