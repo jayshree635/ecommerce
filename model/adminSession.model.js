@@ -1,3 +1,4 @@
+const suid = require('rand-token').suid
 module.exports = (sequelize,Sequelize)=>{
     const adminSession = sequelize.define('adminSessions',{
         admin_id : {
@@ -31,7 +32,8 @@ module.exports = (sequelize,Sequelize)=>{
 
     });
     adminSession.createToken = async function (adminId) {
-        var AdminSession = await AdminSession.create({
+        console.log(adminId);
+        var AdminSession = await adminSession.create({
             token: adminId + suid(99),
             admin_id: adminId,
         });

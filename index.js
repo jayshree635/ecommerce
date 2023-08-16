@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname,'public')))
 app.use(bodyParser.urlencoded({extended : false}));
 
 //.............routes.............
-const route = require('./routes/user/user.route');
+const route = require('./routes/index')
 app.use('/api/v1/',route)
 
 

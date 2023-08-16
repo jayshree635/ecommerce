@@ -1,7 +1,8 @@
-const bcrypt = require('bcryptjs');
+
+const bcrypt = require('bcryptjs')
 
 module.exports = (sequelize, Sequelize) => {
-    const admin = sequelize.define('admins', {
+    const user = sequelize.define('users', {
         id: {
             type: Sequelize.BIGINT.UNSIGNED,
             primaryKey: true,
@@ -9,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         name: {
             type: Sequelize.STRING,
-            allowNull: false
+            // allowNull : false
         },
         email: {
             type: Sequelize.STRING,
@@ -31,42 +32,57 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true,
             get() {
                 const rawValue = this.getDataValue('profile_image');
-                return rawValue ? ASSETS.getProfileURL("profileImages", rawValue) : null;
+                return rawValue ? ASSETS.getProfileURL(rawValue,"profileImages") : null;
             }
         },
-        createdAt : {
-            field : 'created_at',
-            type: Sequelize.DATE,
-            allowNull: true,
+        otp : {
+             type : Sequelize.INTEGER,
+
         },
-        updatedAt : {
-            field : 'updated_at',
-            type: Sequelize.DATE,
-            allowNull: true,
+        opt_time : {
+            type : Sequelize.DATE,
         },
-        deletedAt : {
-            field : 'deleted_at',
+        isVerify : {
+           type : Sequelize.BOOLEAN,
+           defaultValue :false
+        },
+        createdAt: {
+            field: 'created_at',
             type: Sequelize.DATE,
-            allowNull: true,
+            allowNull: false
+        },
+        updatedAt: {
+            field: 'updated_at',
+            type: Sequelize.DATE,
+            allowNull: false
+        },
+        deletedAt: {
+            field: 'deleted_at',
+            type: Sequelize.DATE,
+            allowNull: true
         }
-    },{
-        tableName : 'admins',
-        paranoid : true,
 
-        defaultScope : {
-            attributes : {exclude : ['deletedAt','password']}
+    }, {
+        tableName: 'users',
+        paranoid: true,
+
+        defaultScope: {
+            attributes: { exclude: ['deletedAt', 'password'] }
         },
 
-        scopes : {
-            withPassword : {
-                attributes : {exclude : ['deletedAt']}
+        scopes: {
+            withPassword: {
+                attributes: { exclude: ['deletedAt'] }
             }
         }
     });
-     admin.comparePassword = (plainText,hash) => bcrypt.compareSync(plainText,hash);
-     admin.isExistField = async (whereClause) => {
+
+    user.comparePassword = (painText, hash) => bcrypt.compareSync(painText, hash)
+
+    user.isExistField = async (whereClause) => {
         return await User.findOne({ where: whereClause })
     };
 
-    return admin
+
+    return user
 }

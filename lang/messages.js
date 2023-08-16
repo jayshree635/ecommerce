@@ -10,40 +10,39 @@ const MESSAGES = {
     '1008': 'User not found.',
     '1009': 'Password does not match.',
     '1010': 'Email or password are not match.',
-    '1011':'user account already exist',
+    '1011': 'user account already exist',
     '1012': 'email is verifyed',
-    '1013' : 'send again mail',
-    '1014' : 'email verify successfully...',
-    '1015' : 'otp time expire Send mail again',
-    '1016' : 'email not exist',
-    '1017' : 'check your mail',
+    '1013': 'send again mail',
+    '1014': 'email verify successfully...',
+    '1015': 'otp time expire Send mail again',
+    '1016': 'email not exist',
+    '1017': 'check your mail',
+
+    // Admin controller
+    '1101': 'Get Admin profile successfully.',
+    '1102': 'Login successfully!.',
+    '1103': 'Admin not found.',
+    '1104': 'update admin profile successfully',
+    '1105': 'You are not admin',
 
     // categories controller
-    '1101': 'Categories create successfully!',
-    '1102': 'Categories data get successfully!',
-    '1103': 'Categories delete successfully!',
-  
-    // sub categories controller
-    '1201': 'SubCategories create successfully!',
-    '1202': 'SubCategories data get successfully!',
-    '1203': 'SubCategories delete successfully!',
-  
-    // video controller
-    '1301': 'Video create successfully!',
-    '1302': 'Video get successfully!',
+    '1201': 'Categories create successfully!',
+    '1202': 'Categories data get successfully!',
+    '1203': 'Categories delete successfully!',
+
+    // product controller
+    '1301': 'product create successfully!',
+    '1302': 'product get successfully!',
     '1303': 'You are not admin!',
-    '1304': 'Video delete successfully',
-    '1305': 'Video uploded successfully',
+    '1304': 'product delete successfully',
+    '1305': 'product uploded successfully',
     '1306': 'Please select video file..',
     '1307': 'Video not found',
     '1308': 'Video update successfully',
     '1309': 'You are not active admin!',
 
-    //super admin controller
-    '1401': 'Get all admins successfully!',
-    '1402': 'You are not super admin!',
-    '1403': 'Get admin successfully!',
-    
+   
+
     //Attributes controller
     '1501': 'Create attributes successfully!',
     '1502': 'Get attributes successfully!',
