@@ -116,7 +116,7 @@ const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const isExist = await User.scope('withPassword').findOne({ where: { email: email } });
+        const isExist = await User.scope('withPassword').findOne({ where: { email: email ,isVerify : true} });
         if (isExist) {
             if (await User.comparePassword(password, isExist.password)) {
                 const userJson = isExist.toJSON();

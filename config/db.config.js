@@ -39,18 +39,33 @@ db.Product_categories = require('../model/product_categories.model')(sequelize,S
 db.product = require('../model/product.model')(sequelize,Sequelize);
 db.Product_images = require('../model/product_image.model')(sequelize,Sequelize);
 
+db.Order = require('../model/order.model')(sequelize,Sequelize);
+
+db.Cart = require('../model/cart.model')(sequelize,Sequelize)
 //......................relations......
 db.User.hasMany(db.UserSession,{foreignKey : 'user_id'});
-db.UserSession.belongsTo(db.User,{foreignKey : 'user_id'})
+db.UserSession.belongsTo(db.User,{foreignKey : 'user_id'});
 
 db.Admin.hasMany(db.AdminSession,{foreignKey : 'admin_id'});
-db.AdminSession.belongsTo(db.Admin,{foreignKey : 'admin_id'})
+db.AdminSession.belongsTo(db.Admin,{foreignKey : 'admin_id'});
 
-db.Product_categories.hasMany(db.product, {foreignKey : 'product_categories_id'})
-db.product.belongsTo(db.Product_categories, {foreignKey : 'product_categories_id'})
+db.Product_categories.hasMany(db.product, {foreignKey : 'product_categories_id'});
+db.product.belongsTo(db.Product_categories, {foreignKey : 'product_categories_id'});
 
 db.product.hasMany(db.Product_images,{foreignKey : 'product_id'});
 db.Product_images.hasMany(db.product,{foreignKey : 'product_id'});
 
-// db.sequelize.sync({alert :true})
+db.Order.hasMany(db.User,{foreignKey : 'user_id'});
+db.User.hasMany(db.Order,{foreignKey : 'user_id'});
+
+db.Order.hasMany(db.product,{foreignKey : 'product_id'});
+db.product.hasMany(db.Order,{foreignKey : 'product_id'});
+
+db.Cart.hasMany(db.User,{foreignKey : 'user_id'});
+db.User.hasMany(db.Cart,{foreignKey : 'user_id'});
+
+db.Cart.hasMany(db.product,{foreignKey : 'product_id'});
+db.product.hasMany(db.Cart,{foreignKey : 'product_id'});
+
+// db.sequelize.sync()
 module.exports = db

@@ -32,6 +32,7 @@ const MESSAGES = {
     '1203': 'product Categories delete successfully!',
     '1204': 'product Categories not found!',
     '1205': 'product Categories update successfully!',
+    '1205': 'product Categories delete successfully!',
 
 
     // product controller
@@ -41,19 +42,14 @@ const MESSAGES = {
     '1304': 'product delete successfully',
     '1305': 'product update successfully',
     '1306': 'Please select video file..',
-    '1307': 'Video not found',
-    '1308': 'Video update successfully',
-    '1309': 'You are not active admin!',
+    '1307': 'product not found',
+    '1308': 'product quantity not available',
 
-   
 
-    //Attributes controller
-    '1501': 'Create attributes successfully!',
-    '1502': 'Get attributes successfully!',
-    '1503': 'Get recently added videos successfully!',
-    '1504': 'Get most viewed videos successfully!',
-    '1505': 'Get most liked videos successfully!',
-    '1506': 'Get trending videos successfully!',
+
+    // order controller
+    '1401' : 'order create successfully',
+    '1402' : 'order get successfully',
 
     //video track controller
     '1601': 'Create like successfully!',

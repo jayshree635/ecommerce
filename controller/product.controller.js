@@ -46,7 +46,17 @@ const addProduct = async (req, res) => {
 
         await trans.commit();
 
-        return RESPONSE.success(res, 1301, productData)
+        const findProduct = await Product.findOne({
+            where: { id: productData.id },
+            include: [
+                {
+                    model: product_images,
+                    attributes: ['product_image', 'id']
+                }
+            ]
+        });
+
+        return RESPONSE.success(res, 1301, findProduct)
     } catch (error) {
         await trans.rollback()
         console.log(error);
@@ -64,7 +74,9 @@ const getAllProducts = async (req, res) => {
         }
 
         const allProducts = await Product.findAll();
-
+        if (!allProducts) {
+            return RESPONSE.error(res, 1307)
+        }
         return RESPONSE.success(res, 1202, allProducts)
     } catch (error) {
         console.log(error);
@@ -82,6 +94,9 @@ const getAllProductsByUser = async (req, res) => {
         }
 
         const allProducts = await Product.findAll();
+        if (!allProducts) {
+            return RESPONSE.error(res, 1307)
+        }
 
         return RESPONSE.success(res, 1202, allProducts)
     } catch (error) {
@@ -105,7 +120,6 @@ const updateProduct = async (req, res) => {
     }
 
     let trans = await db.sequelize.transaction();
-
     try {
         const { title, description, price, quantity, product_categories_id } = req.body;
         const product_image = req?.files;
@@ -122,6 +136,7 @@ const updateProduct = async (req, res) => {
             description,
             price,
             quantity,
+            product_categories_id
         }
 
         const findProduct = await Product.findOne({
@@ -136,7 +151,7 @@ const updateProduct = async (req, res) => {
 
         if (!findProduct) {
             await trans.rollback();
-            return RESPONSE.error(res, 1204);
+            return RESPONSE.error(res, 1307);
         }
 
         if (findProduct.product_images) {
@@ -169,9 +184,57 @@ const updateProduct = async (req, res) => {
     }
 };
 
+
+//.....................delete product..................
+const deleteProduct = async (req, res) => {
+
+    let trans = await db.sequelize.transaction();
+    try {
+        const authAdmin = req.user;
+        const product_id = req.query.product_id;
+
+        if (!authAdmin) {
+            return RESPONSE.error(res, 1105)
+        }
+        
+        const findProduct = await Product.findOne({
+            where: { id: product_id },
+            include: [
+                {
+                    model: product_images,
+                    attributes: ['product_image', 'id']
+                }
+            ]
+        });
+
+        if (!findProduct) {
+            await trans.rollback()
+            return RESPONSE.error(res, 1307)
+        }
+
+        if (findProduct.product_images.length) {
+
+            for (const image of findProduct.product_images) {
+                await product_images.destroy({ where: { id: image.id }, transaction: trans })
+                await FILEACTION.deleteFile(path.basename(image.product_image), 'images/productImages');
+
+            }
+        }
+
+        await Product.destroy({ where: { id: product_id }, transaction: trans })
+
+        await trans.commit()
+        return RESPONSE.success(res, 1304)
+    } catch (error) {
+        await trans.rollback()
+        console.log(error);
+        return RESPONSE.error(res, 9999);
+    }
+}
 module.exports = {
     addProduct,
     getAllProducts,
     getAllProductsByUser,
-    updateProduct
+    updateProduct,
+    deleteProduct
 }
