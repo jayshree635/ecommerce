@@ -51,7 +51,7 @@ const signUp = async (req, res) => {
 
         }
 
-        const mail = mailUtils.sendMail("otp mail", `verify email otp  : ${otp}`);
+        // const mail = mailUtils.sendMail("otp mail", `verify email otp  : ${otp}`);
         return RESPONSE.success(res, 1017)
     } catch (error) {
         console.log(error);

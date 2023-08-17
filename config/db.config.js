@@ -10,7 +10,7 @@ const sequelize = new Sequelize(config.database.database, config.database.userNa
         acquire: 30000,
         idle: 10000
     },
-    // logging : false
+    logging : false
 })
 
 try {
@@ -49,23 +49,23 @@ db.UserSession.belongsTo(db.User,{foreignKey : 'user_id'});
 db.Admin.hasMany(db.AdminSession,{foreignKey : 'admin_id'});
 db.AdminSession.belongsTo(db.Admin,{foreignKey : 'admin_id'});
 
-db.Product_categories.hasMany(db.product, {foreignKey : 'product_categories_id'});
-db.product.belongsTo(db.Product_categories, {foreignKey : 'product_categories_id'});
+db.product.hasMany(db.Product_categories, {foreignKey : 'product_categories_id'});
+db.Product_categories.belongsTo(db.product, {foreignKey : 'product_categories_id'});
 
 db.product.hasMany(db.Product_images,{foreignKey : 'product_id'});
-db.Product_images.hasMany(db.product,{foreignKey : 'product_id'});
+db.Product_images.belongsTo(db.product,{foreignKey : 'product_id'});
 
-db.Order.hasMany(db.User,{foreignKey : 'user_id'});
 db.User.hasMany(db.Order,{foreignKey : 'user_id'});
+db.Order.belongsTo(db.User,{foreignKey : 'user_id'});
 
-db.Order.hasMany(db.product,{foreignKey : 'product_id'});
 db.product.hasMany(db.Order,{foreignKey : 'product_id'});
+db.Order.belongsTo(db.product,{foreignKey : 'product_id'});
 
-db.Cart.hasMany(db.User,{foreignKey : 'user_id'});
 db.User.hasMany(db.Cart,{foreignKey : 'user_id'});
+db.Cart.belongsTo(db.User,{foreignKey : 'user_id'});
 
-db.Cart.hasMany(db.product,{foreignKey : 'product_id'});
 db.product.hasMany(db.Cart,{foreignKey : 'product_id'});
+db.Cart.belongsTo(db.product,{foreignKey : 'product_id'});
 
-// db.sequelize.sync()
+db.sequelize.sync({alter : true})
 module.exports = db

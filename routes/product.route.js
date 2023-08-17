@@ -34,7 +34,11 @@ route.post('/add-product',auth.authAdmin,uploadImage.uploadMultipleImage('produc
 
 route.get('/get-all-product',auth.authAdmin,productController.getAllProducts)
 
-route.get('/get-all-product-user',auth.authUser,productController.getAllProductsByUser)
+route.get('/get-single-product-by-admin',auth.authAdmin,productController.getOneProductsByAdmin)
+
+route.get('/get-all-product-user',auth.authUser,productController.getAllProductsByUser);
+
+route.get('/get-one-product-by-user',auth.authUser,productController.getOneProductsByUser);
 
 route.patch('/update-product',auth.authAdmin,uploadImage.uploadMultipleImage('productImages','product_image'),productController.updateProduct);
 

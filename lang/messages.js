@@ -50,6 +50,8 @@ const MESSAGES = {
     // order controller
     '1401' : 'order create successfully',
     '1402' : 'order get successfully',
+    '1403' : 'order not found',
+    '1404' : 'your order cancel successfully',
 
     //video track controller
     '1601': 'Create like successfully!',

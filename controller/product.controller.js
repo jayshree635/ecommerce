@@ -73,7 +73,16 @@ const getAllProducts = async (req, res) => {
             return RESPONSE.error(res, 1105)
         }
 
-        const allProducts = await Product.findAll();
+        const allProducts = await Product.findAll({
+            include: [
+                {
+                    model: product_images,
+                    attributes: ['id', 'product_id', 'product_image']
+
+                }
+            ]
+        }
+        );
         if (!allProducts) {
             return RESPONSE.error(res, 1307)
         }
@@ -84,6 +93,35 @@ const getAllProducts = async (req, res) => {
     }
 }
 
+
+//........................get single product by admin..........
+const getOneProductsByAdmin = async (req, res) => {
+    try {
+        const authAdmin = req.user;
+        const product_id = req.query.product_id
+        if (!authAdmin) {
+            return RESPONSE.error(res, 1105)
+        }
+
+        const allProducts = await Product.findOne({
+            where: { id: product_id },
+            include: [
+                {
+                    model: product_images,
+                    attributes: ['id', 'product_id', 'product_image']
+
+                }
+            ]
+        });
+        if (!allProducts) {
+            return RESPONSE.error(res, 1307)
+        }
+        return RESPONSE.success(res, 1202, allProducts)
+    } catch (error) {
+        console.log(error);
+        return RESPONSE.error(res, 9999)
+    }
+}
 
 //....................get all product  by user.............
 const getAllProductsByUser = async (req, res) => {
@@ -93,7 +131,17 @@ const getAllProductsByUser = async (req, res) => {
             return RESPONSE.error(res, 1018)
         }
 
-        const allProducts = await Product.findAll();
+        const allProducts = await Product.findAll(
+            {
+                include: [
+                    {
+                        model: product_images,
+                        attributes: ['id', 'product_id', 'product_image']
+
+                    }
+                ]
+            }
+        );
         if (!allProducts) {
             return RESPONSE.error(res, 1307)
         }
@@ -105,6 +153,35 @@ const getAllProductsByUser = async (req, res) => {
     }
 }
 
+
+const getOneProductsByUser = async (req, res) => {
+    try {
+        const authUser = req.user;
+        const id = req.query.id
+
+        if (!authUser) {
+            return RESPONSE.error(res, 1105)
+        }
+
+        const allProducts = await Product.findOne({
+            where: { id:id},
+            include: [
+                {
+                    model: product_images,
+                    attributes: ['id',  'product_image']
+
+                }
+            ]
+        });
+        if (!allProducts) {
+            return RESPONSE.error(res, 1307)
+        }
+        return RESPONSE.success(res, 1202, allProducts)
+    } catch (error) {
+        console.log(error);
+        return RESPONSE.error(res, 9999)
+    }
+}
 //................update product...........................
 
 const updateProduct = async (req, res) => {
@@ -196,7 +273,7 @@ const deleteProduct = async (req, res) => {
         if (!authAdmin) {
             return RESPONSE.error(res, 1105)
         }
-        
+
         const findProduct = await Product.findOne({
             where: { id: product_id },
             include: [
@@ -236,5 +313,7 @@ module.exports = {
     getAllProducts,
     getAllProductsByUser,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getOneProductsByAdmin,
+    getOneProductsByUser
 }

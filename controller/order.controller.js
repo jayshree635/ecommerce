@@ -1,11 +1,13 @@
 const Validator = require('validatorjs');
 const db = require('../config/db.config');
 const randomstring = require('randomstring');
+const { where } = require('sequelize');
 
 //...........models..........
 const Order = db.Order;
 const User = db.User;
 const Product = db.product
+const Product_images = db.Product_images
 
 
 //.................order API ........................//
@@ -67,7 +69,174 @@ const order = async (req, res) => {
 }
 
 
+//........................get  all order by admin.............
+const getAllOrderByAdmin = async (req, res) => {
+    try {
+        const authAdmin = req.user;
+
+        const findOrder = await Order.findAll({
+            where: { status: 'confirm' },
+            include: [
+                {
+                    model: Product,
+                    attributes: ['id', 'title', 'description', 'product_categories_id', 'price', 'quantity',],
+                    include: [
+                        {
+                            model: Product_images,
+                            attributes: ['id', 'product_id', 'product_image']
+                        }
+                    ]
+                },
+
+            ]
+        });
+
+        if (!findOrder.length) {
+            return RESPONSE.error(res, 1403)
+        }
+
+        return RESPONSE.success(res, 1402, findOrder)
+    } catch (error) {
+        console.log(error);
+        return RESPONSE.error(res, 9999)
+    }
+}
+
+//................get single order by admin.................
+const getOneOrderByAdmin = async (req, res) => {
+    try {
+        const authAdmin = req.user;
+        const order_id = req.query.order_id;
+
+        const findOrder = await Order.findOne({
+            where: { order_id:order_id, status: 'confirm' },
+            include: [
+                {
+                    model: Product,
+                    attributes: ['id', 'title', 'description', 'product_categories_id', 'price', 'quantity',],
+                    include: [
+                        {
+                            model: Product_images,
+                            attributes: ['id', 'product_id', 'product_image']
+                        }
+                    ]
+                },
+
+            ]
+        });
+
+        if (!findOrder) {
+            return RESPONSE.error(res, 1403)
+        }
+
+        return RESPONSE.success(res, 1402, findOrder)
+    } catch (error) {
+        console.log(error);
+        return RESPONSE.error(res, 9999)
+    }
+}
+
+//........................get order by user...................
+const getOrderByUser = async (req, res) => {
+    try {
+        const authUser = req.user;
+
+        const findOrder = await Order.findAll({
+            where: { user_id: authUser.id, status: 'confirm' },
+            include: [
+                {
+                    model: Product,
+                    attributes: ['id', 'title', 'description', 'product_categories_id', 'price', 'quantity'],
+                    include: [
+                        {
+                            model: Product_images,
+                            attributes: ['id', 'product_id', 'product_image']
+                        }
+                    ]
+                }
+            ]
+        });
+        if (!findOrder.length) {
+            return RESPONSE.error(res, 1403)
+        }
+
+        return RESPONSE.success(res, 1402, findOrder)
+    } catch (error) {
+        console.log(error);
+        return RESPONSE.error(res, 9999)
+    }
+}
+
+
+//.....................get one order by user
+const getOneOrderByUser = async (req, res) => {
+    try {
+        const authUser = req.user;
+        const order_id = req.query.order_id;
+
+        const findOrder = await Order.findOne({
+            where: { order_id:order_id, user_id:authUser.id,status: 'confirm' },
+            include: [
+                {
+                    model: Product,
+                    attributes: ['id', 'title', 'description', 'product_categories_id', 'price', 'quantity',],
+                    include: [
+                        {
+                            model: Product_images,
+                            attributes: ['id', 'product_id', 'product_image']
+                        }
+                    ]
+                },
+
+            ]
+        });
+
+        if (!findOrder) {
+            return RESPONSE.error(res, 1403)
+        }
+
+        return RESPONSE.success(res, 1402, findOrder)
+    } catch (error) {
+        console.log(error);
+        return RESPONSE.error(res, 9999)
+    }
+}
+
+
+//..................order cancel.............
+const cancelOrder = async (req, res) => {
+    let validation = new Validator(req.body, {
+        order_id: 'required'
+    });
+    if (validation.fails()) {
+        firstMessage = Object.keys(validation.errors.all())[0];
+        return RESPONSE.error(res, validation.errors.first(firstMessage))
+    };
+
+    try {
+        const authUser = req.user;
+        const { order_id } = req.body;
+
+        const findOrder = await Order.findOne({ where: { order_id: order_id, status: 'confirm', user_id: authUser.id } });
+        if (!findOrder) {
+            return RESPONSE.error(res, 1403)
+        }
+
+        await Order.update({ status: 'cancel' }, { where: { order_id: order_id } });
+
+        return RESPONSE.success(res, 1404)
+    } catch (error) {
+        console.log(error);
+        return RESPONSE.error(res, 9999)
+    }
+}
+
 
 module.exports = {
-    order
+    order,
+    getAllOrderByAdmin,
+    getOneOrderByAdmin,
+    getOrderByUser,
+    cancelOrder,
+    getOneOrderByUser
 }

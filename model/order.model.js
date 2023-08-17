@@ -33,6 +33,10 @@ module.exports = (sequelize,Sequelize) => {
             type : Sequelize.INTEGER,
             allowNull : false
         },
+        status : {
+          type : Sequelize.ENUM(['cancel','confirm']),
+          defaultValue : 'confirm'
+        },
         createdAt: {
             field: 'created_at',
             type: Sequelize.DATE,
