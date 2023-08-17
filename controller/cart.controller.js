@@ -51,7 +51,7 @@ const getCart = async (req, res) => {
             return RESPONSE.error(res, 1604)
         }
 
-        return RESPONSE.error(res, 1603, cartData)
+        return RESPONSE.error(res, 1603, cartData);
     } catch (error) {
         console.log(error);
         return RESPONSE.error(res, 9999)
@@ -84,6 +84,7 @@ const removeCart = async (req, res) => {
         return RESPONSE.error(res, 9999)
     }
 }
+
 module.exports = {
     AddCart,
     getCart,

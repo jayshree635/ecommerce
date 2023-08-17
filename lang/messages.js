@@ -59,14 +59,9 @@ const MESSAGES = {
     '1603': 'get cart successfully...',
     '1604': 'cart not found',
     '1605': 'remove cart successfully..',
+    '1606': 'cart product order successfully..',
     
     
-
-    // sub categories controller
-    '1701': 'Sub categories create successfully!',
-    '1702': 'Sub Categories data get successfully!',
-    '1703': 'Sub Categories not found!',
-
     // Common
     '9000': 'Please Enter valid Details',
     '9999': "Something went wrong!",

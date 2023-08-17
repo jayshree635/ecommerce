@@ -9,7 +9,8 @@ const auth = require('../middelware/apiAuth')
 //Controllers
 const orderController = require('../controller/order.controller');
 
-const cartController = require('../controller/cart.controller') 
+const cartController = require('../controller/cart.controller'); 
+const { or } = require('sequelize');
 
 
 //.......................................... routes  ...........................................
@@ -24,7 +25,10 @@ route.get('/get-all-product-by-admin',auth.authAdmin,orderController.getAllOrder
 
 route.get('/get-single-order-by-admin',auth.authAdmin,orderController.getOneOrderByAdmin)
 
-route.delete('/cancel-order',auth.authUser,orderController.cancelOrder)
+route.delete('/cancel-order',auth.authUser,orderController.cancelOrder);
+
+route.post('/order-cart-product',auth.authUser,orderController.orderCartsProduct)
+
 
 
 //..........................cart........................................
@@ -34,5 +38,6 @@ route.post('/add-cart',auth.authUser,cartController.AddCart);
 route.get('/get-cart',auth.authUser,cartController.getCart);
 
 route.delete('/remove-cart',auth.authUser,cartController.removeCart)
+
 
 module.exports = route
