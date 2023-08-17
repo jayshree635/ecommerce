@@ -53,11 +53,14 @@ const MESSAGES = {
     '1403' : 'order not found',
     '1404' : 'your order cancel successfully',
 
-    //video track controller
-    '1601': 'Create like successfully!',
-    '1602': 'Dislike video successfully!',
-    '1603': 'Create views successfully!',
-    '1604': 'Total likes of video is Zero!',
+    // cart controller
+    '1601': 'add product in cart successfully..',
+    '1602': 'product already exist in cart',
+    '1603': 'get cart successfully...',
+    '1604': 'cart not found',
+    '1605': 'remove cart successfully..',
+    
+    
 
     // sub categories controller
     '1701': 'Sub categories create successfully!',
