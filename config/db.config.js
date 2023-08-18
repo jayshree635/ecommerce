@@ -67,5 +67,5 @@ db.Cart.belongsTo(db.User,{foreignKey : 'user_id'});
 db.product.hasMany(db.Cart,{foreignKey : 'product_id'});
 db.Cart.belongsTo(db.product,{foreignKey : 'product_id'});
 
-db.sequelize.sync({alter : true})
+// db.sequelize.sync({alter : true})
 module.exports = db

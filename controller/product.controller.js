@@ -26,7 +26,7 @@ const addProduct = async (req, res) => {
     try {
         const { title, description, price, quantity, product_categories_id } = req.body;
         const product_image = req?.files;
-
+console.log(product_image);
         const authAdmin = req.user;
         if (!authAdmin) {
             await trans.rollback()

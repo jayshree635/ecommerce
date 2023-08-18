@@ -33,7 +33,7 @@ function uploadMultipleImage(folderName, fileName) {
         },
 
         filename: function (req, file, cb) {
-          cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+          cb(null, file.fieldname + '-' + (Math.random() * 1000000000000000) + path.extname(file.originalname))
         }
       }),
 

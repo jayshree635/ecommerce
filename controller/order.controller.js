@@ -237,19 +237,30 @@ const orderCartsProduct = async (req, res) => {
     let validation = new Validator(req.body, {
         // product_id: 'required',
         // quantity: 'required|numeric|min:1'
-        products: 'required|array',
-        'product.*',
+        products: 'required|array',//max:1 fix size in array
         'products.*.product_id': 'required',
         'products.*.quantity': 'required|numeric|min:1'
-    });
+    },
+        {
+            "array.products": "allow only array"
+        });
     if (validation.fails()) {
         firstMessage = Object.keys(validation.errors.all())[0];
         return RESPONSE.error(res, validation.errors.first(firstMessage))
     };
+
     let trans = await db.sequelize.transaction()
     try {
         const { products } = req.body;
         const authUser = req.user;
+
+        const productArray = products.map((item) => item.product_id)
+        console.log(productArray);
+        const productData = new Set(productArray);
+        console.log(productData);
+        if (productData.size !== productArray.length) {
+            return RESPONSE.error(res, 1405);
+        }
 
         for (const cartData of products) {
 
@@ -268,8 +279,12 @@ const orderCartsProduct = async (req, res) => {
                 isExistOrderId = await Order.findOne({ where: { order_id } });
             }
 
-            const isExistProductId = await Product.findOne({ where: { id: cartData.product_id } });
+            const CartProduct = await Cart.findOne({ where: { id: cartData.product_id } });
+            if (!CartProduct) {
+                return RESPONSE.error(res, 1309)
+            }
 
+            const isExistProductId = await Product.findOne({ where: { id: cartData.product_id } });
             if (!isExistProductId) {
                 await trans.rollback()
                 return RESPONSE.error(res, 1307)

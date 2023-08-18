@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
 require('./helpers/global');
-const { Server } = require('socket.io');
 
 const db = require('./config/db.config');
 const config = require('./config/config');
@@ -37,34 +36,7 @@ if (config.protocol == "https") {
     server = http.createServer(app)
 }
 
-//..........socket io..
 
-const io = new Server(server, {
-    cors: {
-       origin : '*'
-    }
-})
-
-let users = {};
-
-io.on('connection',socket=>{
-    console.log("connect");
-
-    socket.on('new-user-join',name=>{
-        users[socket.id] = name;
-        socket.broadcast.emit('user-joined',name)
-    });
-    
-    socket.on('sendMessage', (message) => {
-        console.log('message',message);
-        socket.broadcast.emit('getMessage', {message:message,name: users[socket.id]})
-    });
-
-    socket.on('disconnect',message =>{
-        socket.broadcast.emit('leave',users[socket.id]);
-        delete users[socket.id];
-    })
-})
 
 server.listen(config.prot, () => {
     console.log(`server running on port ${config.prot}`);

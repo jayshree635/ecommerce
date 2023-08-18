@@ -142,8 +142,7 @@ const getUserProfile = async (req, res) => {
     try {
         const authUser = req.user;
 
-        // const findUser = await User.scope('withPassword').findOne({ where: { id: userId, } });
-        const findUser = await User.findOne({ id: authUser.id, deleted_At: null }, '-password')
+        const findUser = await User.findOne({where:{ id: authUser.id, deleted_At: null }})
 
         if (!findUser) {
             return RESPONSE.error(res, 1008)

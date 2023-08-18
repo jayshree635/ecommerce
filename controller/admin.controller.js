@@ -8,7 +8,7 @@ const AdminSession = db.AdminSession;
 
 //...........phone_no validation
 Validator.register('phone_length', (value) => {
-    return value.length >=10 && value.length <= 12;
+    return value.length >= 10 && value.length <= 12;
 }, 'The phone_no must be between 10 and 12 characters.');
 
 
@@ -87,7 +87,7 @@ const updateAdminProfile = async (req, res) => {
         return RESPONSE.error(res, validation.errors.first(firstMessage))
     }
     try {
-        const authAdmin= req.user;
+        const authAdmin = req.user;
 
         const { name, current_password, new_password, phone_no } = req.body;
         const profile_image = req?.file?.filename;
@@ -123,7 +123,7 @@ const updateAdminProfile = async (req, res) => {
 
 
 //........................logout admin.......................
-const AdminLogout = async(req,res)=>{
+const AdminLogout = async (req, res) => {
     try {
         const authAdmin = req.user;
 

@@ -44,6 +44,7 @@ const MESSAGES = {
     '1306': 'Please select video file..',
     '1307': 'product not found',
     '1308': 'product quantity not available',
+    '1309': 'product not available in cart ',
 
 
 
@@ -52,6 +53,7 @@ const MESSAGES = {
     '1402' : 'order get successfully',
     '1403' : 'order not found',
     '1404' : 'your order cancel successfully',
+    '1405' : 'same product_id order',
 
     // cart controller
     '1601': 'add product in cart successfully..',
