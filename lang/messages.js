@@ -17,7 +17,6 @@ const MESSAGES = {
     '1015': 'otp time expire Send mail again',
     '1016': 'email not exist',
     '1017': 'check your mail',
-    '1018': 'check your mail',
 
     // Admin controller
     '1101': 'Get Admin profile successfully.',
@@ -49,11 +48,11 @@ const MESSAGES = {
 
 
     // order controller
-    '1401' : 'order create successfully',
-    '1402' : 'order get successfully',
-    '1403' : 'order not found',
-    '1404' : 'your order cancel successfully',
-    '1405' : 'same product_id order',
+    '1401': 'order create successfully',
+    '1402': 'order get successfully',
+    '1403': 'order not found',
+    '1404': 'your order cancel successfully',
+    '1405': 'same product_id order',
 
     // cart controller
     '1601': 'add product in cart successfully..',
@@ -62,8 +61,8 @@ const MESSAGES = {
     '1604': 'cart not found',
     '1605': 'remove cart successfully..',
     '1606': 'cart product order successfully..',
-    
-    
+
+
     // Common
     '9000': 'Please Enter valid Details',
     '9999': "Something went wrong!",

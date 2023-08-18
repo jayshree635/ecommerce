@@ -1,5 +1,5 @@
 //Modules
-const route= require('express').Router();
+const route = require('express').Router();
 
 //Middleware
 const uploadImage = require('../middelware/uploadFile')
@@ -16,13 +16,13 @@ const productController = require('../controller/product.controller')
 
 //.......................................... routes  ...........................................
 
-route.post('/admin-login',AdminController.adminLogin);
+route.post('/admin-login', AdminController.adminLogin);
 
-route.get('/get-profile',auth.authAdmin,AdminController.getAdminProfile);
+route.get('/get-profile', auth.authAdmin, AdminController.getAdminProfile);
 
-route.patch('/update-admin-profile',auth.authAdmin,uploadImage.uploadImage('profileImages','profile_image'),AdminController.updateAdminProfile)
+route.patch('/update-admin-profile', auth.authAdmin, uploadImage.uploadImage('profileImages', 'profile_image'), AdminController.updateAdminProfile)
 
-route.delete('/logout-admin',auth.authAdmin,AdminController.AdminLogout)
+route.delete('/logout-admin', auth.authAdmin, AdminController.AdminLogout)
 
 
 

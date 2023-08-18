@@ -26,7 +26,7 @@ const addProduct = async (req, res) => {
     try {
         const { title, description, price, quantity, product_categories_id } = req.body;
         const product_image = req?.files;
-console.log(product_image);
+
         const authAdmin = req.user;
         if (!authAdmin) {
             await trans.rollback()
@@ -127,10 +127,7 @@ const getOneProductsByAdmin = async (req, res) => {
 const getAllProductsByUser = async (req, res) => {
     try {
         const authUser = req.user;
-        if (!authUser) {
-            return RESPONSE.error(res, 1018)
-        }
-
+        
         const allProducts = await Product.findAll(
             {
                 include: [

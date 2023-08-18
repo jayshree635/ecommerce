@@ -1,14 +1,14 @@
 
-module.exports = (sequelize,Sequelize) =>{
-    const product_categories = sequelize.define('product_categories',{
-        id : {
+module.exports = (sequelize, Sequelize) => {
+    const product_categories = sequelize.define('product_categories', {
+        id: {
             type: Sequelize.BIGINT.UNSIGNED,
             primaryKey: true,
             autoIncrement: true,
         },
-        name : {
+        name: {
             type: Sequelize.STRING,
-            allowNull : false
+            allowNull: false
         },
         createdAt: {
             field: 'created_at',
@@ -25,10 +25,10 @@ module.exports = (sequelize,Sequelize) =>{
             type: Sequelize.DATE,
             allowNull: true
         }
-        
-    },{
-        tableName : 'product_categories',
-        paranoid : true,
+
+    }, {
+        tableName: 'product_categories',
+        paranoid: true,
 
 
     })

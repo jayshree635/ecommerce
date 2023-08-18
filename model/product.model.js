@@ -1,33 +1,33 @@
 
-module.exports = (sequelize,Sequelize) =>{
-    const product = sequelize.define('products',{
-        id : {
+module.exports = (sequelize, Sequelize) => {
+    const product = sequelize.define('products', {
+        id: {
             type: Sequelize.BIGINT.UNSIGNED,
             primaryKey: true,
             autoIncrement: true,
         },
-        title : {
+        title: {
             type: Sequelize.STRING,
-            allowNull : false
+            allowNull: false
         },
-        description : {
+        description: {
             type: Sequelize.STRING,
-            allowNull : false
+            allowNull: false
         },
-        product_categories_id:{
-            type : Sequelize.BIGINT.UNSIGNED,
-            references : {
-                model : 'product_categories',
-                key : 'id'
+        product_categories_id: {
+            type: Sequelize.BIGINT.UNSIGNED,
+            references: {
+                model: 'product_categories',
+                key: 'id'
             }
         },
-        price : {
-            type : Sequelize.INTEGER,
-            allowNull : false
+        price: {
+            type: Sequelize.INTEGER,
+            allowNull: false
         },
-        quantity : {
-            type : Sequelize.INTEGER,
-            allowNull : false
+        quantity: {
+            type: Sequelize.INTEGER,
+            allowNull: false
         },
         createdAt: {
             field: 'created_at',
@@ -50,9 +50,9 @@ module.exports = (sequelize,Sequelize) =>{
         //         return rawValue ? ASSETS.getProfileURL(rawValue,"productImages") : null;
         //     }
         // }
-    },{
-        tableName : 'products',
-        paranoid : true
+    }, {
+        tableName: 'products',
+        paranoid: true
     })
     return product
 }

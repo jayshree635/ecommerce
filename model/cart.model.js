@@ -1,24 +1,24 @@
-module.exports = (sequelize,Sequelize) =>{
-    const cart = sequelize.define('carts',{
-        id : {
+module.exports = (sequelize, Sequelize) => {
+    const cart = sequelize.define('carts', {
+        id: {
             type: Sequelize.BIGINT.UNSIGNED,
             primaryKey: true,
             autoIncrement: true,
         },
-        product_id : {
-            type : Sequelize.BIGINT.UNSIGNED,
-            allowNull : false,
-            references : {
-                model : 'products',
-                key : 'id'
+        product_id: {
+            type: Sequelize.BIGINT.UNSIGNED,
+            allowNull: false,
+            references: {
+                model: 'products',
+                key: 'id'
             }
         },
-        user_id : {
-            type : Sequelize.BIGINT.UNSIGNED,
-            allowNull : false,
-            references : {
-                model : 'users',
-                key : 'id'
+        user_id: {
+            type: Sequelize.BIGINT.UNSIGNED,
+            allowNull: false,
+            references: {
+                model: 'users',
+                key: 'id'
             }
         },
         createdAt: {
@@ -36,9 +36,9 @@ module.exports = (sequelize,Sequelize) =>{
             type: Sequelize.DATE,
             allowNull: true
         }
-    },{
-        tableName : 'carts',
-        paranoid : true
+    }, {
+        tableName: 'carts',
+        paranoid: true
     });
     return cart
 }

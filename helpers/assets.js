@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-function getProfileURL(fileName,folderName) {
+function getProfileURL(fileName, folderName) {
     return process.env.APP_PROJECT_PATH + `images/${folderName}/` + fileName;
 }
 function getFileURL(fileName) {

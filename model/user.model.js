@@ -32,19 +32,19 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true,
             get() {
                 const rawValue = this.getDataValue('profile_image');
-                return rawValue ? ASSETS.getProfileURL(rawValue,"profileImages") : null;
+                return rawValue ? ASSETS.getProfileURL(rawValue, "profileImages") : null;
             }
         },
-        otp : {
-             type : Sequelize.INTEGER,
+        otp: {
+            type: Sequelize.INTEGER,
 
         },
-        opt_time : {
-            type : Sequelize.DATE,
+        opt_time: {
+            type: Sequelize.DATE,
         },
-        isVerify : {
-           type : Sequelize.BOOLEAN,
-           defaultValue :false
+        isVerify: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: false
         },
         createdAt: {
             field: 'created_at',

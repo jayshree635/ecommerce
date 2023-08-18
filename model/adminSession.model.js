@@ -1,7 +1,7 @@
 const suid = require('rand-token').suid
-module.exports = (sequelize,Sequelize)=>{
-    const adminSession = sequelize.define('adminSessions',{
-        admin_id : {
+module.exports = (sequelize, Sequelize) => {
+    const adminSession = sequelize.define('adminSessions', {
+        admin_id: {
             type: Sequelize.BIGINT.UNSIGNED,
             allowNull: false,
             references: {
@@ -9,26 +9,26 @@ module.exports = (sequelize,Sequelize)=>{
                 key: 'id'
             }
         },
-        token : {
-            type : Sequelize.STRING(255)
+        token: {
+            type: Sequelize.STRING(255)
         },
-        createdAt : {
-            field : 'created_at',
+        createdAt: {
+            field: 'created_at',
             type: Sequelize.DATE,
             allowNull: true,
         },
-        updatedAt : {
-            field : 'updated_at',
+        updatedAt: {
+            field: 'updated_at',
             type: Sequelize.DATE,
             allowNull: true,
         },
-        deletedAt : {
-            field : 'deleted_at',
+        deletedAt: {
+            field: 'deleted_at',
             type: Sequelize.DATE,
             allowNull: true,
         }
-    },{
-        tableName : 'adminSessions',
+    }, {
+        tableName: 'adminSessions',
 
     });
     adminSession.createToken = async function (adminId) {

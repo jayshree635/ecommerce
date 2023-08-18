@@ -11,7 +11,7 @@ module.exports.error = function (res, messageCode, error = '', statusCode = 422)
     var response = {};
     response.success = false;
     response.message = messages.getMessage(messageCode);
-    if(error != ''){
+    if (error != '') {
         response.error = error;
     }
     statusCode = (messageCode == 9999) ? 500 : statusCode;

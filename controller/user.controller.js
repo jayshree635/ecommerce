@@ -51,7 +51,7 @@ const signUp = async (req, res) => {
 
         }
 
-        // const mail = mailUtils.sendMail("otp mail", `verify email otp  : ${otp}`);
+        const mail = mailUtils.sendMail("otp mail", `verify email otp  : ${otp}`);
         return RESPONSE.success(res, 1017)
     } catch (error) {
         console.log(error);
@@ -116,7 +116,7 @@ const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const isExist = await User.scope('withPassword').findOne({ where: { email: email ,isVerify : true} });
+        const isExist = await User.scope('withPassword').findOne({ where: { email: email, isVerify: true } });
         if (isExist) {
             if (await User.comparePassword(password, isExist.password)) {
                 const userJson = isExist.toJSON();
@@ -142,7 +142,7 @@ const getUserProfile = async (req, res) => {
     try {
         const authUser = req.user;
 
-        const findUser = await User.findOne({where:{ id: authUser.id, deleted_At: null }})
+        const findUser = await User.findOne({ where: { id: authUser.id, deleted_At: null } })
 
         if (!findUser) {
             return RESPONSE.error(res, 1008)
@@ -217,7 +217,7 @@ const logout = async (req, res) => {
     try {
         const authUser = req.user;
 
-        await UserSession.destroy({ where: { token: req.headers.authorization } });
+        await UserSession.destroy({ where: { id: authUser.id } });
 
         return RESPONSE.success(res, 1003)
     } catch (error) {
@@ -225,6 +225,8 @@ const logout = async (req, res) => {
         return RESPONSE.error(res, 9999)
     }
 }
+
+
 //..............delete user.............
 const deleteUser = async (req, res) => {
     try {

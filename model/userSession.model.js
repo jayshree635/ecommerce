@@ -23,8 +23,15 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DATE,
             allowNull: false,
         },
+        deletedAt: {
+            field: 'deleted_at',
+            type: Sequelize.DATE,
+            allowNull: true,
+        },
     }, {
         tableName: 'user_sessions',
+        paranoid: true
+
     });
 
     UserSession.createToken = async function (userId) {

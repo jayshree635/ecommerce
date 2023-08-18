@@ -1,24 +1,24 @@
 
-module.exports = (sequelize,Sequelize) =>{
-    const product_image = sequelize.define('product_images',{
-        id : {
+module.exports = (sequelize, Sequelize) => {
+    const product_image = sequelize.define('product_images', {
+        id: {
             type: Sequelize.BIGINT.UNSIGNED,
             primaryKey: true,
             autoIncrement: true,
         },
-        product_id:{
-            type : Sequelize.BIGINT.UNSIGNED,
-            allowNull : false,
-            references : {
-                model : 'products',
-                key : 'id'
+        product_id: {
+            type: Sequelize.BIGINT.UNSIGNED,
+            allowNull: false,
+            references: {
+                model: 'products',
+                key: 'id'
             }
         },
-        product_image :{
-            type : Sequelize.TEXT,
+        product_image: {
+            type: Sequelize.TEXT,
             get() {
                 const rawValue = this.getDataValue('product_image');
-                return rawValue ? ASSETS.getProfileURL(rawValue,"productImages") : null;
+                return rawValue ? ASSETS.getProfileURL(rawValue, "productImages") : null;
             }
         },
         createdAt: {
@@ -36,10 +36,10 @@ module.exports = (sequelize,Sequelize) =>{
             type: Sequelize.DATE,
             allowNull: true
         }
-        
-    },{
-        tableName : 'product_images',
-        paranoid : true
+
+    }, {
+        tableName: 'product_images',
+        paranoid: true
     })
     return product_image
 }

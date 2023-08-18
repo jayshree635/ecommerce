@@ -14,9 +14,9 @@ module.exports = {
         host: process.env.DB_HOST
     },
 
-    email : {
-        email : process.env.EMAIL,
-        pass : process.env.PASS
+    email: {
+        email: process.env.EMAIL,
+        pass: process.env.PASS
     },
     sslCertificates: {
         privkey: process.env.PRIVKEY,

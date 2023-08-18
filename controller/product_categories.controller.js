@@ -55,9 +55,7 @@ const getAllProduct_categories = async (req, res) => {
 const getAllCategoriesByUser = async (req, res) => {
     try {
         const authUser = req.user;
-        if (!authUser) {
-            return RESPONSE.error(res, 1018)
-        }
+       
 
         const allCategories = await Product_categories.findAll();
         if (!allCategories) {
@@ -115,10 +113,10 @@ const deleteProductCategories = async (req, res) => {
         if (!findCategories) {
             return RESPONSE.error(res, 1204)
         }
- 
-         await Product_categories.destroy({where : {id : product_categories_id}})
 
-        return RESPONSE.success(res,1205 )
+        await Product_categories.destroy({ where: { id: product_categories_id } })
+
+        return RESPONSE.success(res, 1205)
     } catch (error) {
         console.log(error);
         return RESPONSE.error(res, 9999)

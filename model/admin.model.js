@@ -31,42 +31,42 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true,
             get() {
                 const rawValue = this.getDataValue('profile_image');
-                return rawValue ? ASSETS.getProfileURL(rawValue,"profileImages") : null;
+                return rawValue ? ASSETS.getProfileURL(rawValue, "profileImages") : null;
             }
         },
-        createdAt : {
-            field : 'created_at',
+        createdAt: {
+            field: 'created_at',
             type: Sequelize.DATE,
             allowNull: true,
         },
-        updatedAt : {
-            field : 'updated_at',
+        updatedAt: {
+            field: 'updated_at',
             type: Sequelize.DATE,
             allowNull: true,
         },
-        deletedAt : {
-            field : 'deleted_at',
+        deletedAt: {
+            field: 'deleted_at',
             type: Sequelize.DATE,
             allowNull: true,
         }
-    },{
-        tableName : 'admins',
-        paranoid : true,
+    }, {
+        tableName: 'admins',
+        paranoid: true,
 
-        defaultScope : {
-            attributes : {exclude : ['deletedAt','password']}
+        defaultScope: {
+            attributes: { exclude: ['deletedAt', 'password'] }
         },
 
-        scopes : {
-            withPassword : {
-                attributes : {exclude : ['deletedAt']}
+        scopes: {
+            withPassword: {
+                attributes: { exclude: ['deletedAt'] }
             }
         }
     });
 
-     admin.comparePassword = (painText, hash) => bcrypt.compareSync(painText, hash)
+    admin.comparePassword = (painText, hash) => bcrypt.compareSync(painText, hash)
 
-     admin.isExistField = async (whereClause) => {
+    admin.isExistField = async (whereClause) => {
         return await User.findOne({ where: whereClause })
     };
 

@@ -1,5 +1,5 @@
 //Modules
-const route= require('express').Router();
+const route = require('express').Router();
 
 //Middleware
 const uploadImage = require('../middelware/uploadFile')
@@ -9,35 +9,35 @@ const auth = require('../middelware/apiAuth')
 //Controllers
 const orderController = require('../controller/order.controller');
 
-const cartController = require('../controller/cart.controller'); 
+const cartController = require('../controller/cart.controller');
 const { or } = require('sequelize');
 
 
 //.......................................... routes  ...........................................
 
-route.post('/create-order',auth.authUser,orderController.order);
+route.post('/create-order', auth.authUser, orderController.order);
 
-route.get('/get-order-by-user',auth.authUser,orderController.getOrderByUser);
+route.get('/get-order-by-user', auth.authUser, orderController.getOrderByUser);
 
-route.get('/get-dingle-order-by-user',auth.authUser,orderController.getOneOrderByUser)
+route.get('/get-dingle-order-by-user', auth.authUser, orderController.getOneOrderByUser)
 
-route.get('/get-all-product-by-admin',auth.authAdmin,orderController.getAllOrderByAdmin);
+route.get('/get-all-product-by-admin', auth.authAdmin, orderController.getAllOrderByAdmin);
 
-route.get('/get-single-order-by-admin',auth.authAdmin,orderController.getOneOrderByAdmin)
+route.get('/get-single-order-by-admin', auth.authAdmin, orderController.getOneOrderByAdmin)
 
-route.delete('/cancel-order',auth.authUser,orderController.cancelOrder);
+route.delete('/cancel-order', auth.authUser, orderController.cancelOrder);
 
-route.post('/order-cart-product',auth.authUser,orderController.orderCartsProduct)
+route.post('/order-cart-product', auth.authUser, orderController.orderCartsProduct)
 
 
 
 //..........................cart........................................
 
-route.post('/add-cart',auth.authUser,cartController.AddCart);
+route.post('/add-cart', auth.authUser, cartController.AddCart);
 
-route.get('/get-cart',auth.authUser,cartController.getCart);
+route.get('/get-cart', auth.authUser, cartController.getCart);
 
-route.delete('/remove-cart',auth.authUser,cartController.removeCart)
+route.delete('/remove-cart', auth.authUser, cartController.removeCart)
 
 
 module.exports = route
