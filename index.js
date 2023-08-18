@@ -54,9 +54,16 @@ io.on('connection',socket=>{
         users[socket.id] = name;
         socket.broadcast.emit('user-joined',name)
     });
+    
+    socket.on('sendMessage', (message) => {
+        console.log('message',message);
+        socket.broadcast.emit('getMessage', {message:message,name: users[socket.id]})
+    });
 
-
-    socket.on('send-message')
+    socket.on('disconnect',message =>{
+        socket.broadcast.emit('leave',users[socket.id]);
+        delete users[socket.id];
+    })
 })
 
 server.listen(config.prot, () => {

@@ -164,11 +164,11 @@ const getOneProductsByUser = async (req, res) => {
         }
 
         const allProducts = await Product.findOne({
-            where: { id:id},
+            where: { id: id },
             include: [
                 {
                     model: product_images,
-                    attributes: ['id',  'product_image']
+                    attributes: ['id', 'product_image']
 
                 }
             ]

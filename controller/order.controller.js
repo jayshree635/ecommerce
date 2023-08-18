@@ -238,6 +238,7 @@ const orderCartsProduct = async (req, res) => {
         // product_id: 'required',
         // quantity: 'required|numeric|min:1'
         products: 'required|array',
+        'product.*',
         'products.*.product_id': 'required',
         'products.*.quantity': 'required|numeric|min:1'
     });
@@ -283,7 +284,9 @@ const orderCartsProduct = async (req, res) => {
 
             const order = await Order.create({ product_id: cartData.product_id, order_id, user_id: authUser.id, quantity: cartData.quantity, paid_Amount }, { transaction: trans })
 
-            await Product.update({ quantity: isExistProductId.quantity - cartData.quantity }, { where: { id: isExistProductId.id }, transaction: trans })
+            await Product.update({ quantity: isExistProductId.quantity - cartData.quantity }, { where: { id: isExistProductId.id }, transaction: trans });
+
+            await Cart.destroy({ where: { id: cartData.product_id }, transaction: trans })
 
         }
 
@@ -298,6 +301,7 @@ const orderCartsProduct = async (req, res) => {
     }
 
 }
+
 
 module.exports = {
     order,
