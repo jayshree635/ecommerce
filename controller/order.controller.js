@@ -235,8 +235,6 @@ const cancelOrder = async (req, res) => {
 //....................order carts product..............
 const orderCartsProduct = async (req, res) => {
     let validation = new Validator(req.body, {
-        // product_id: 'required',
-        // quantity: 'required|numeric|min:1'
         products: 'required|array',//max:1 fix size in array
         'products.*.product_id': 'required',
         'products.*.quantity': 'required|numeric|min:1'

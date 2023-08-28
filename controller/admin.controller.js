@@ -29,14 +29,11 @@ const adminLogin = async (req, res) => {
 
         if (isExist) {
             if (await Admin.comparePassword(password, isExist.password)) {
-                console.log("ok1");
                 const adminJson = isExist.toJSON();
                 adminJson.token = await AdminSession.createToken(isExist.id);
                 delete adminJson.password;
                 return RESPONSE.success(res, 1102, adminJson);
             } else {
-                console.log("ok2");
-
                 return RESPONSE.error(res, 1010)
             }
         } else {
@@ -73,7 +70,6 @@ const getAdminProfile = async (req, res) => {
 
 //.....................update admin profile...................
 const updateAdminProfile = async (req, res) => {
-
 
     let validation = new Validator(req.body, {
         name: 'string|max:50',
